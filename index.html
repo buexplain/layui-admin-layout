@@ -24,13 +24,8 @@
                     </a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="">
-                                基本资料
-                            </a>
-                        </dd>
-                        <dd>
-                            <a href="">
-                                安全设置
+                            <a href="javascript:;" onclick="forget()">
+                                修改密码
                             </a>
                         </dd>
                     </dl>
@@ -70,7 +65,7 @@
         });
 
         //模拟的节点
-        var node = [{"name":"主页","id":30,"pid":0,"url":"/index"},{"name":"文档管理","id":31,"pid":0,"url":"javascript:void(0);"},{"name":"广告管理","id":57,"pid":0,"url":"javascript:void(0);"},{"name":"附件管理","id":48,"pid":0,"url":"/attach/manage"},{"name":"权限管理","id":1,"pid":0,"url":"javascript:void(0);"},{"name":"分类管理","id":58,"pid":57,"url":"/ad/category"},{"name":"横幅管理","id":65,"pid":57,"url":"/ad/banner"},{"name":"用户管理","id":2,"pid":1,"url":"/rbac/user"},{"name":"角色管理","id":11,"pid":1,"url":"/rbac/role"},{"name":"节点管理","id":19,"pid":1,"url":"/rbac/node"},{"name":"分类管理","id":32,"pid":31,"url":"/doc/category"},{"name":"内容管理","id":40,"pid":31,"url":"/doc/content"},{"name":"layui文档","id":41,"pid":0,"url":"javascript:void(0);"},{"name":"页面元素","id":42,"pid":41,"url":"javascript:void(0);"},{"name":"布局","id":43,"pid":42,"url":"javascript:void(0);"},{"name":"栅格系统","id":44,"pid":43,"url":"https://www.layui.com/doc/element/layout.html#grid"},{"name":"后台布局","id":45,"pid":43,"url":"https://www.layui.com/doc/element/layout.html#admin"},{"name":"layui 颜色","id":46,"pid":42,"url":"https://www.layui.com/doc/element/color.html"},{"name":"颜色参考","id":47,"pid":46,"url":"https://www.layui.com/doc/element/color.html#color-design"},{"name":"内置的背景色类","id":48,"pid":46,"url":"https://www.layui.com/doc/element/color.html#bgcolor"},{"name":"内置模块","id":49,"pid":41,"url":"javascript:void(0);"},{"name":"弹层组件文档 - layui.layer","id":50,"pid":49,"url":"https://www.layui.com/doc/modules/layer.html"},{"name":" 日期和时间组件文档 - layui.laydate","id":51,"pid":49,"url":"https://www.layui.com/doc/modules/laydate.html"}];
+        var node = [{"name":"主页","id":1,"pid":0,"url":"http://www.layui.com"},{"name":"layui文档","id":2,"pid":0,"url":"javascript:void(0);"},{"name":"页面元素","id":3,"pid":2,"url":"javascript:void(0);"},{"name":"布局","id":4,"pid":3,"url":"javascript:void(0);"},{"name":"栅格系统","id":5,"pid":4,"url":"https://www.layui.com/doc/element/layout.html#grid"},{"name":"后台布局","id":6,"pid":4,"url":"https://www.layui.com/doc/element/layout.html#admin"},{"name":"layui 颜色","id":7,"pid":3,"url":"https://www.layui.com/doc/element/color.html"},{"name":"颜色参考","id":8,"pid":7,"url":"https://www.layui.com/doc/element/color.html#color-design"},{"name":"内置的背景色类","id":9,"pid":7,"url":"https://www.layui.com/doc/element/color.html#bgcolor"},{"name":"内置模块","id":10,"pid":2,"url":"javascript:void(0);"},{"name":"弹层组件文档 - layui.layer","id":11,"pid":10,"url":"https://www.layui.com/doc/modules/layer.html"},{"name":" 日期和时间组件文档 - layui.laydate","id":12,"pid":10,"url":"https://www.layui.com/doc/modules/laydate.html"}];
 
         //初始化页面骨架
         var skeleton = null;
@@ -79,6 +74,17 @@
             skeleton.nav.set(node, 0, 'id', 'pid', 'name', 'url');
             skeleton.nav.open(node[0].id);
         });
+
+        /**
+         * 忘记密码
+         */
+        function forget() {
+            var id  = '2018-10-12';
+            if(skeleton.tab.has(id) == false) {
+                skeleton.tab.addIFrame("修改密码", "https://fly.layui.com/user/forget", id);
+            }
+            skeleton.tab.change(id);
+        }
     </script>
 </body>
 </html>

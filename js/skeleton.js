@@ -1,4 +1,4 @@
-layui.define(['layer','element', 'boostNav', 'boostTab'], function(exports) {
+layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
     var _tab = null;
     var _nav = null;
     var $    = layui.jquery;
@@ -11,6 +11,7 @@ layui.define(['layer','element', 'boostNav', 'boostTab'], function(exports) {
             $(this).height(h);
         });
     }
+
     exports('skeleton', function(navFilter, tabFilter) {
         _nav = layui.boostNav(navFilter);
         _tab = layui.boostTab(tabFilter);
@@ -22,16 +23,8 @@ layui.define(['layer','element', 'boostNav', 'boostTab'], function(exports) {
                 if(_tab.has(id)) {
                     _tab.del(id)
                 }
-                //显示加载层
-                var loadIndex = layer.load();
-                //设置2秒后再次关闭loading
-                setTimeout(function() {
-                    layer.close(loadIndex);
-                }, 2000);
-                //拼接iframe
-                var iframe = '<iframe onload="layui.layer.close('+loadIndex+')" src="'+url+'" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
                 //顶部切换卡新增一个卡片
-                _tab.add(title, iframe, id);
+                _tab.addIFrame(title, url, id);
                 //重新计内容框高度
                 resetContentHeight(height());
                 //切换到当前

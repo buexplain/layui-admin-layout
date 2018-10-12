@@ -16,6 +16,17 @@ layui.define(['layer','element'], function(exports) {
         element.tabAdd(_filter, {title: title, content: content, id: id});
     }
 
+    function addIFrame(title, url, id) {
+        //显示加载层
+        var loadIndex = layer.load();
+        //设置2秒后再次关闭loading
+        setTimeout(function() {
+            layer.close(loadIndex);
+        }, 2000);
+        var iframe = '<iframe onload="layui.layer.close('+loadIndex+')" src="'+url+'" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
+        add(title, iframe, id)
+    }
+
     function has(id) {
         var li = _title.find('li[lay-id='+id+']');
         if(li.length == 0) {
@@ -40,6 +51,6 @@ layui.define(['layer','element'], function(exports) {
             layer.msg('没有找到切换卡');
             return false;
         }
-        return {change: change, add: add, has: has, del: del, _title: _title, _content: _content};
+        return {change: change, add: add, addIFrame:addIFrame, has: has, del: del, _title: _title, _content: _content};
     });
 });
