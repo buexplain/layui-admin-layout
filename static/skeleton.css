@@ -1,0 +1,18 @@
+.layui-layout-admin .layui-body {
+	bottom:0;
+}
+.layui-layout-admin .layui-tab {
+	margin:0;
+}
+.layui-layout-admin .layui-tab-content {
+	padding:0;
+}
+.layui-layout-admin .layui-tab-title li:first-child .layui-tab-close {
+	display:none;
+}
+
+.layui-tab .page-control{display: flex;position: absolute;z-index:11;right: 0; border-bottom: 1px solid #e6e6e6; background: #fff;}
+.layui-tab .page-control .btn{width:56px;height: 40px; line-height: 40px; padding: 0 20px;box-sizing: border-box; cursor:pointer;}
+.layui-tab .page-control .btn:hover{border-bottom: 2px solid #5FB878; color: #5FB878;}
+.layui-tab .layui-tab-title{width:calc(100% - 142px);padding-right: 30px;}
+.layui-tab .layui-tab-title:after{content:'';position:absolute;right:0;top:0;height:100%;border-right: 1px solid #e6e6e6;}

@@ -23,8 +23,16 @@ layui.define(['layer','element'], function(exports) {
         setTimeout(function() {
             layer.close(loadIndex);
         }, 2000);
-        var iframe = '<iframe onload="layui.layer.close('+loadIndex+')" src="'+url+'" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
+        var iframe = '<iframe onload="layui.layer.close('+loadIndex+')" src="'+url+'" id="iframe-i-'+id+'" name="iframe-n-'+id+'" frameborder="0" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
         add(title, iframe, id)
+    }
+
+    function currContent() {
+        var tmp = _content.find('.layui-show');
+        if(tmp.length == 0) {
+            return null;
+        }
+        return tmp.eq(0);
     }
 
     function has(id) {
@@ -51,6 +59,6 @@ layui.define(['layer','element'], function(exports) {
             layer.msg('没有找到切换卡');
             return false;
         }
-        return {change: change, add: add, addIFrame:addIFrame, has: has, del: del, _title: _title, _content: _content};
+        return {currContent: currContent, change: change, add: add, addIFrame: addIFrame, has: has, del: del, _title: _title, _content: _content};
     });
 });
