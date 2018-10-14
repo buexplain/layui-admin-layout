@@ -1,7 +1,8 @@
 layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
-    var _tab = null;
-    var _nav = null;
-    var $    = layui.jquery;
+    var _tab  = null;
+    var _nav  = null;
+    var $     = layui.jquery;
+    var layer = layui.layer;
     function height() {
         return $(window).height() - 60 - 41 - 3;
     }
@@ -13,7 +14,7 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
     /**
      * 刷新当前切换卡
      */
-    function reload() {
+    function refresh() {
         var content = _tab.currContent();
         if(content == null) {
             return;
@@ -27,13 +28,20 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
             var name = iframe.attr("name");
             var url = window.frames[name].location.href;
             var urlArr = url.split('?', 2);
-            url = urlArr[0] + "?_r_"+(new Date).getMilliseconds()+"=1";
-            if(urlArr.length == 2) {
-                url += "&"+urlArr[1];
+            if(urlArr.length == 1) {
+                url = urlArr[0] + "?_r_"+(new Date).getMilliseconds()+"=1";
+            }else{
+                if(urlArr[1].indexOf("_r_") == -1) {
+                    url = urlArr[0] + "?_r_"+(new Date).getMilliseconds()+"=1&"+urlArr[1];
+                }else{
+                    url = url.replace(/_r_[0-9]+=1/, "_r_"+(new Date).getMilliseconds()+"=1");
+                }    
             }
-            alert(url);
             iframe.attr("src", url);
         } catch(e) {
+            layer.msg("操作失败", {icon: 2, time:1000, zIndex:998,  success: function(layero, index) {
+                layero.css('z-index', 998);
+            }});
             console.log(e)
         } finally {
 
@@ -42,7 +50,7 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
     /**
      * 当前选项卡后退
      */
-     function back() {
+     function back(o) {
          var content = _tab.currContent();
         if(content == null) {
             return;
@@ -55,6 +63,9 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
             var name = iframe.attr("name");
             window.frames[name].history.go(-1);
         } catch(e) {
+            layer.msg("操作失败", {icon: 2, time:1000, zIndex:998,  success: function(layero, index) {
+                layero.css('z-index', 998);
+            }});
             console.log(e)
         } finally {
 
@@ -87,7 +98,7 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
         return {
             nav:_nav,
             tab:_tab,
-            reload:reload,
+            refresh:refresh,
             back:back
         }
     });
