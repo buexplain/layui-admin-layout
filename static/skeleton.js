@@ -72,6 +72,16 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
         }
      }
 
+    /**
+     * 添加一个选项卡
+     */
+    function addIFrame(title, url, id) {
+        if(!_tab.has(id)) {
+            _tab.addIFrame(title, url, id);
+            resetContentHeight(height());
+        }
+    }
+
     exports('skeleton', function(navFilter, tabFilter) {
         _nav = layui.boostNav(navFilter);
         _tab = layui.boostTab(tabFilter);
@@ -98,6 +108,7 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
         return {
             nav:_nav,
             tab:_tab,
+            addIFrame:addIFrame,
             refresh:refresh,
             back:back
         }
