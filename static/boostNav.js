@@ -1,48 +1,48 @@
-layui.define(['layer','element', 'categoryTree'], function(exports) {
+layui.define(['layer','element', 'treeHelper'], function(exports) {
     var layer      = layui.layer;
     var element    = layui.element;
-    var categoryTree   = layui.categoryTree;
+    var treeHelper = layui.treeHelper;
     var $          = layui.jquery;
 
     var _filter  = null;
-    var _nav        = null;
+    var _nav     = null;
 
     /**
      * 将树形结构的数据渲染成html
      */
-    function renderHTML(data, topid, idname, pidname, nodename, urlname) {
-        topid    = topid    || 0;
-        idname   = idname   || 'id';
-        pidname  = pidname  || 'pid';
-        nodename = nodename || 'node';
+    function renderHTML(data, topID, idName, pidName, nodeName, urlname) {
+        topID    = topID    || 0;
+        idName   = idName   || 'id';
+        pidName  = pidName  || 'pid';
+        nodeName = nodeName || 'node';
         urlname  = urlname  || 'url';
 
-        var recursion = new categoryTree.recursion(data, idname, pidname, topid);
+        var recursion = new treeHelper.recursion(data, idName, pidName, topID);
         var html = '';
 
-        recursion.forBefore = function (v, k, hasChildren) {
+        recursion.currentBefore = function (v, k, counter) {
             html += '<li class="layui-nav-item">';
         };
 
-        recursion.forcurr = function(v, k, hasChildren) {
-            html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+v[idname]+'"' : '')+'>';
-            html += v[nodename];
+        recursion.current = function(v, k, counter) {
+            html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+v[idName]+'"' : '')+'>';
+            html += v[nodeName];
             html += '</a>';
         };
 
-        recursion.callBefore = function (v, k) {
+        recursion.loopBefore = function (v, k) {
             html += '<ul class="layui-nav-child">';
         };
 
-        recursion.callAfter = function (v, k) {
+        recursion.loopAfter = function (v, k) {
             html += '</ul>';
         };
 
-        recursion.forAfter = function (v, k, hasChildren) {
+        recursion.currentAfter = function (v, k, counter) {
             html += '</li>';
         };
 
-        recursion.start();
+        recursion.loop();
 
         return html;
     }
@@ -50,8 +50,8 @@ layui.define(['layer','element', 'categoryTree'], function(exports) {
     /**
      * 添加
      */
-    function add(data, topid, idname, pidname, nodename, urlname) {
-        var html = renderHTML(data, topid, idname, pidname, nodename, urlname);
+    function add(data, topID, idName, pidName, nodeName, urlName) {
+        var html = renderHTML(data, topID, idName, pidName, nodeName, urlName);
         _nav.append(html);
         element.render('nav', _filter);
     }
@@ -59,8 +59,8 @@ layui.define(['layer','element', 'categoryTree'], function(exports) {
     /**
      * 重置
      */
-    function set(data, topid, idname, pidname, nodename, urlname) {
-        var html = renderHTML(data, topid, idname, pidname, nodename, urlname);
+    function set(data, topID, idName, pidName, nodeName, urlName) {
+        var html = renderHTML(data, topID, idName, pidName, nodeName, urlName);
         _nav.html(html);
         element.init('nav('+_filter+')');
     }
@@ -77,7 +77,7 @@ layui.define(['layer','element', 'categoryTree'], function(exports) {
     }
 
     function open(id) {
-        if(isOpen(id) == false) {
+        if(isOpen(id) === false) {
             var a = _nav.find('a[data-id='+id+']');
             if(a.length > 0) {
                 a.eq(0).click();
@@ -86,7 +86,7 @@ layui.define(['layer','element', 'categoryTree'], function(exports) {
     }
 
     function close(id) {
-        if(isOpen(id) == true) {
+        if(isOpen(id) === true) {
             var a = _nav.find('a[data-id='+id+']');
             if(a.length > 0) {
                 a.eq(0).click();
@@ -114,7 +114,7 @@ layui.define(['layer','element', 'categoryTree'], function(exports) {
     exports('boostNav', function(filter) {
         _filter  = filter;
         _nav        = $('.layui-nav[lay-filter='+_filter+']').eq(0);
-        if(_nav.length == 0) {
+        if(_nav.length === 0) {
             layer.msg('没有找到导航栏，模块初始化失败');
             return false;
         }

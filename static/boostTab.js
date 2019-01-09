@@ -29,7 +29,7 @@ layui.define(['layer','element'], function(exports) {
 
     function currContent() {
         var tmp = _content.find('.layui-show');
-        if(tmp.length == 0) {
+        if(tmp.length === 0) {
             return null;
         }
         return tmp.eq(0);
@@ -37,7 +37,7 @@ layui.define(['layer','element'], function(exports) {
 
     function has(id) {
         var li = _title.find('li[lay-id='+id+']');
-        if(li.length == 0) {
+        if(li.length === 0) {
             return false;
         }
         return true;
@@ -55,7 +55,7 @@ layui.define(['layer','element'], function(exports) {
         _tab     = $('.layui-tab[lay-filter='+_filter+']').eq(0);
         _title   = _tab.children('.layui-tab-title').eq(0);
         _content = _tab.children('.layui-tab-content').eq(0);
-        if(_tab.length == 0) {
+        if(_tab.length === 0) {
             layer.msg('没有找到切换卡');
             return false;
         }
