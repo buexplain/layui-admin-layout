@@ -16,6 +16,52 @@ layui.define(['layer','element'], function(exports) {
         element.tabAdd(_filter, {title: title, content: content, id: id});
     }
 
+    window.__2019125_history = {
+        destroy: function(id) {
+            window.localStorage.removeItem(id);
+        },
+        record: function (id) {
+            var tmp = document.querySelectorAll("iframe");
+            var history = window.localStorage.getItem(id);
+            if(history == null) {
+                history = [];
+            }else {
+                history = JSON.parse(history);
+            }
+            try {
+                for(var i in tmp) {
+                    if(tmp[i].id === id) {
+                        var url = window.frames[i].location.href;
+                        if(history[history.length -1] !== url) {
+                            history.push(window.frames[i].location.href);
+                            window.localStorage.setItem(id, JSON.stringify(history));
+                        }
+                    }
+                }
+            }catch (e) {
+                console.log(e);
+            }
+        },
+        back: function (id) {
+            var history = window.localStorage.getItem(id);
+            if(history == null) {
+                history = [];
+            }else {
+                history = JSON.parse(history);
+            }
+            if(history.length === 0) {
+                return '';
+            }
+            if(history.length === 1) {
+                return history[0];
+            }
+            history.pop();
+            var url = history.pop();
+            window.localStorage.setItem(id, JSON.stringify(history));
+            return url;
+        }
+    };
+
     function addIFrame(title, url, id) {
         //显示加载层
         var loadIndex = layer.load();
@@ -23,7 +69,8 @@ layui.define(['layer','element'], function(exports) {
         setTimeout(function() {
             layer.close(loadIndex);
         }, 2000);
-        var iframe = '<iframe onload="layui.layer.close('+loadIndex+')" src="'+url+'" id="iframe-i-'+id+'" name="iframe-n-'+id+'" frameborder="0" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
+        window.__2019125_history.destroy('iframe-i-2019125-'+id);
+        var iframe = '<iframe onload="layui.layer.close('+loadIndex+');__2019125_history.record(this.id);" src="'+url+'" id="iframe-i-2019125-'+id+'" name="iframe-n-2019125-'+id+'" frameborder="0" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
         add(title, iframe, id)
     }
 
