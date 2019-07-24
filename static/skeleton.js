@@ -1,6 +1,9 @@
-layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
+/**
+ * 整个骨架
+ */
+layui.define(['layer', 'element', 'skeletonMenu', 'skeletonTab'], function(exports) {
     var _tab  = null;
-    var _nav  = null;
+    var _menu  = null;
     var $     = layui.jquery;
     var layer = layui.layer;
 
@@ -8,17 +11,11 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
         return $(window).height() - 60 - 41 - 3;
     }
 
-    function resetContentHeight(h) {
-        _tab._content.find('.layui-tab-item').each(function() {
-            $(this).height(h);
-        });
-    }
-
     /**
      * 刷新当前切换卡
      */
     function refresh() {
-        var content = _tab.currContent();
+        var content = _tab.curr();
         if(content == null) {
             return;
         }
@@ -50,7 +47,7 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
      * 当前选项卡后退
      */
      function back(o) {
-        var content = _tab.currContent();
+        var content = _tab.curr();
         if(content == null) {
             return;
         }
@@ -74,31 +71,21 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
         }
      }
 
-    /**
-     * 添加一个选项卡
-     */
-    function addIFrame(title, url, id) {
-        if(!_tab.has(id)) {
-            _tab.addIFrame(title, url, id);
-            resetContentHeight(height());
-        }
-    }
-
-    exports('skeleton', function(navFilter, tabFilter) {
-        _nav = layui.boostNav(navFilter);
-        _tab = layui.boostTab(tabFilter);
+    exports('skeleton', function(menuFilter, tabFilter) {
+        _menu = layui.skeletonMenu(menuFilter);
+        _tab = layui.skeletonTab(tabFilter);
 
         //监听右侧栏目的点击事件
-        _nav.listen(function(elem) {
+        _menu.listen(function(elem) {
             var title = elem[0].innerText;
             var url   = elem.attr('data-url');
             var id    = elem.attr('data-id');
             if(url !== undefined && url !== "" && url.indexOf('javascript') === -1 && id !== undefined && id !== "") {
                 if(!_tab.has(id)) {
                     //顶部切换卡新增一个卡片
-                    _tab.addIFrame(title, url, id);
+                    _tab.add(title, url, id);
                     //重新计内容框高度
-                    resetContentHeight(height());
+                    _tab.resetHeight(height());
                 }
                 //切换到当前
                 _tab.change(id);
@@ -107,14 +94,13 @@ layui.define(['layer', 'element', 'boostNav', 'boostTab'], function(exports) {
 
         //窗口高度变化，重新计内容框高度
         $(window).resize(function() {
-            resetContentHeight(height());
+            _tab.resetHeight(height());
         }).resize();
 
         //返回
         return {
-            nav:_nav,
+            menu:_menu,
             tab:_tab,
-            addIFrame:addIFrame,
             refresh:refresh,
             back:back
         }

@@ -76,8 +76,10 @@
         var skeleton = null;
         layui.use('skeleton', function() {
             skeleton = layui.skeleton('left-nav', 'top-tab');
-            skeleton.nav.set(node, 0, 'id', 'pid', 'name', 'url');
-            skeleton.nav.open(node[0].id);
+            //初始化菜单栏
+            skeleton.menu.init(node, 0, 'id', 'pid', 'name', 'url');
+            //打开第一个节点
+            skeleton.menu.open(node[0].id);
         });
 
         /**
@@ -86,7 +88,7 @@
         function forget() {
             var id  = '2018-10-12';
             if(skeleton.tab.has(id) == false) {
-                skeleton.addIFrame("修改密码", "https://fly.layui.com/user/forget", id);
+                skeleton.tab.add("修改密码", "https://fly.layui.com/user/forget", id);
             }
             skeleton.tab.change(id);
         }

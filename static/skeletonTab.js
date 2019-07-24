@@ -1,3 +1,6 @@
+/**
+ * 顶部选项卡
+ */
 layui.define(['layer','element'], function(exports) {
     var layer      = layui.layer;
     var element    = layui.element;
@@ -7,14 +10,6 @@ layui.define(['layer','element'], function(exports) {
     var _tab     = null;
     var _title   = null;
     var _content = null;
-
-    function change(id) {
-        element.tabChange(_filter, id);
-    }
-
-    function add(title, content, id) {
-        element.tabAdd(_filter, {title: title, content: content, id: id});
-    }
 
     window.__2019125_history = {
         destroy: function(id) {
@@ -62,7 +57,17 @@ layui.define(['layer','element'], function(exports) {
         }
     };
 
-    function addIFrame(title, url, id) {
+    /**
+     * 切换选项卡
+     */
+    function change(id) {
+        element.tabChange(_filter, id);
+    }
+
+    /**
+     * 添加一个选项卡
+     */
+    function add(title, url, id) {
         //显示加载层
         var loadIndex = layer.load();
         //设置2秒后再次关闭loading
@@ -71,10 +76,13 @@ layui.define(['layer','element'], function(exports) {
         }, 2000);
         window.__2019125_history.destroy('iframe-i-2019125-'+id);
         var iframe = '<iframe onload="layui.layer.close('+loadIndex+');__2019125_history.record(this.id);" src="'+url+'" id="iframe-i-2019125-'+id+'" name="iframe-n-2019125-'+id+'" frameborder="0" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
-        add(title, iframe, id)
+        element.tabAdd(_filter, {title: title, content: iframe, id: id});
     }
 
-    function currContent() {
+    /**
+     * 返回当前选项卡
+     */
+    function curr() {
         var tmp = _content.find('.layui-show');
         if(tmp.length === 0) {
             return null;
@@ -82,6 +90,9 @@ layui.define(['layer','element'], function(exports) {
         return tmp.eq(0);
     }
 
+    /**
+     * 判断一个选项卡是否存在
+     */
     function has(id) {
         var li = _title.find('li[lay-id='+id+']');
         if(li.length === 0) {
@@ -90,14 +101,26 @@ layui.define(['layer','element'], function(exports) {
         return true;
     }
 
+    /**
+     * 删除一个选项卡
+     */
     function del(id) {
         element.tabDelete(_filter, id);
     }
 
     /**
+     * 重置内容区域高度
+     */
+    function resetHeight(h) {
+        _content.find('.layui-tab-item').each(function() {
+            $(this).height(h);
+        });
+    }
+
+    /**
      * 导出接口
      */
-    exports('boostTab', function(filter) {
+    exports('skeletonTab', function(filter) {
         _filter  = filter;
         _tab     = $('.layui-tab[lay-filter='+_filter+']').eq(0);
         _title   = _tab.children('.layui-tab-title').eq(0);
@@ -106,6 +129,6 @@ layui.define(['layer','element'], function(exports) {
             layer.msg('没有找到切换卡');
             return false;
         }
-        return {currContent: currContent, change: change, add: add, addIFrame: addIFrame, has: has, del: del, _title: _title, _content: _content};
+        return {resetHeight: resetHeight, curr: curr, change: change, add: add, has: has, del: del};
     });
 });

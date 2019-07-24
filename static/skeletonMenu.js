@@ -1,3 +1,6 @@
+/**
+ * 左侧菜单栏
+ */
 layui.define(['layer','element', 'treeHelper'], function(exports) {
     var layer      = layui.layer;
     var element    = layui.element;
@@ -5,7 +8,7 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
     var $          = layui.jquery;
 
     var _filter  = null;
-    var _nav     = null;
+    var _menu     = null;
 
     /**
      * 将树形结构的数据渲染成html
@@ -25,7 +28,7 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
         };
 
         recursion.current = function(v, k, counter) {
-            html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+v[idName]+'"' : '')+'>';
+            html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+uniqueID(v[idName])+'"' : '')+'>';
             html += v[nodeName];
             html += '</a>';
         };
@@ -47,26 +50,24 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
         return html;
     }
 
-    /**
-     * 添加
-     */
-    function add(data, topID, idName, pidName, nodeName, urlName) {
-        var html = renderHTML(data, topID, idName, pidName, nodeName, urlName);
-        _nav.append(html);
-        element.render('nav', _filter);
+    function uniqueID(id) {
+        return 'skeleton-menu-'+id;
     }
 
     /**
-     * 重置
+     * 初始化
      */
-    function set(data, topID, idName, pidName, nodeName, urlName) {
+    function init(data, topID, idName, pidName, nodeName, urlName) {
         var html = renderHTML(data, topID, idName, pidName, nodeName, urlName);
-        _nav.html(html);
+        _menu.html(html);
         element.init('nav('+_filter+')');
     }
 
+    /**
+     * 判断是否打开
+     */
     function isOpen(id) {
-        var a = _nav.find('a[data-id='+id+']');
+        var a = _menu.find('a[data-id='+uniqueID(id)+']');
         if(a.length > 0) {
             var p = a.parent();
             if(p.hasClass('layui-nav-itemed') || p.hasClass('layui-this')) {
@@ -76,29 +77,27 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
         return false;
     }
 
+    /**
+     * 打开一个菜单
+     */
     function open(id) {
         if(isOpen(id) === false) {
-            var a = _nav.find('a[data-id='+id+']');
+            var a = _menu.find('a[data-id='+uniqueID(id)+']');
             if(a.length > 0) {
                 a.eq(0).click();
             }
         }
     }
 
+    /**
+     * 关闭一个菜单
+     */
     function close(id) {
         if(isOpen(id) === true) {
-            var a = _nav.find('a[data-id='+id+']');
+            var a = _menu.find('a[data-id='+uniqueID(id)+']');
             if(a.length > 0) {
                 a.eq(0).click();
             }
-        }
-    }
-
-    function flexible(id) {
-        var a = _nav.find('a[data-id='+id+']');
-        if(a.length > 0) {
-            a.eq(0).click();
-            console.log(a.eq(0)[0].innerText)
         }
     }
 
@@ -111,13 +110,13 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
     /**
      * 导出接口
      */
-    exports('boostNav', function(filter) {
+    exports('skeletonMenu', function(filter) {
         _filter  = filter;
-        _nav        = $('.layui-nav[lay-filter='+_filter+']').eq(0);
-        if(_nav.length === 0) {
+        _menu        = $('.layui-nav[lay-filter='+_filter+']').eq(0);
+        if(_menu.length === 0) {
             layer.msg('没有找到导航栏，模块初始化失败');
             return false;
         }
-        return {add: add, set: set, flexible:flexible, isOpen:isOpen, open:open, close:close, listen:listen};
+        return {init: init, isOpen:isOpen, open:open, close:close, listen:listen};
     });
 });
