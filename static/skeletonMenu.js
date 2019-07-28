@@ -28,7 +28,7 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
         };
 
         recursion.current = function(v, k, counter) {
-            html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+uniqueID(v[idName])+'"' : '')+'>';
+            html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+v[idName]+'"' : '')+'>';
             html += v[nodeName];
             html += '</a>';
         };
@@ -50,10 +50,6 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
         return html;
     }
 
-    function uniqueID(id) {
-        return 'skeleton-menu-'+id;
-    }
-
     /**
      * 初始化
      */
@@ -67,7 +63,7 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
      * 判断是否打开
      */
     function isOpen(id) {
-        var a = _menu.find('a[data-id='+uniqueID(id)+']');
+        var a = _menu.find('a[data-id='+id+']');
         if(a.length > 0) {
             var p = a.parent();
             if(p.hasClass('layui-nav-itemed') || p.hasClass('layui-this')) {
@@ -82,7 +78,7 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
      */
     function open(id) {
         if(isOpen(id) === false) {
-            var a = _menu.find('a[data-id='+uniqueID(id)+']');
+            var a = _menu.find('a[data-id='+id+']');
             if(a.length > 0) {
                 a.eq(0).click();
             }
@@ -94,7 +90,7 @@ layui.define(['layer','element', 'treeHelper'], function(exports) {
      */
     function close(id) {
         if(isOpen(id) === true) {
-            var a = _menu.find('a[data-id='+uniqueID(id)+']');
+            var a = _menu.find('a[data-id='+id+']');
             if(a.length > 0) {
                 a.eq(0).click();
             }

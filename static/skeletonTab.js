@@ -11,6 +11,9 @@ layui.define(['layer','element'], function(exports) {
     var _title   = null;
     var _content = null;
 
+    /**
+     * 记录每个tab iframe 的 src
+     */
     window.__2019125_history = {
         destroy: function(id) {
             window.localStorage.removeItem(id);
@@ -74,8 +77,8 @@ layui.define(['layer','element'], function(exports) {
         setTimeout(function() {
             layer.close(loadIndex);
         }, 2000);
-        window.__2019125_history.destroy('iframe-i-2019125-'+id);
-        var iframe = '<iframe onload="layui.layer.close('+loadIndex+');__2019125_history.record(this.id);" src="'+url+'" id="iframe-i-2019125-'+id+'" name="iframe-n-2019125-'+id+'" frameborder="0" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
+        window.__2019125_history.destroy('iframe-id-'+id);
+        var iframe = '<iframe onload="layui.layer.close('+loadIndex+');window.__2019125_history.record(this.id);" src="'+url+'" id="iframe-id-'+id+'" name="iframe-name-'+id+'" frameborder="0" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
         element.tabAdd(_filter, {title: title, content: iframe, id: id});
     }
 
