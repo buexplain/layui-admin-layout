@@ -1,60 +1,95 @@
 /**
  * 左侧菜单栏
  */
-layui.define(['layer','element', 'treeHelper'], function(exports) {
-    var layer      = layui.layer;
-    var element    = layui.element;
-    var treeHelper = layui.treeHelper;
-    var $          = layui.jquery;
+layui.define(['layer','element'], function(exports) {
+    var layer   = layui.layer;
+    var element = layui.element;
+    var $       = layui.jquery;
 
     var _filter  = null;
     var _menu     = null;
 
     /**
+     * 将一个父子级的数组转换成一棵树形数组
+     */
+    function tree(arr, idName, parentIDName, childrenName) {
+        idName = idName || 'id';
+        parentIDName = parentIDName || 'pid';
+        childrenName = childrenName || 'children';
+
+        var map = new Map();
+        arr.forEach(function (value) {
+            value[childrenName] = [];
+            map.set(value[idName], value);
+        });
+
+        var result = [];
+
+        arr.forEach(function (value) {
+            if(map.has(value[parentIDName])) {
+                map.get(value[parentIDName])[childrenName].push(value);
+            }else {
+                result.push(value);
+            }
+        });
+        return result;
+    };
+
+    /**
      * 将树形结构的数据渲染成html
      */
-    function renderHTML(data, topID, idName, pidName, nodeName, urlname) {
-        topID    = topID    || 0;
-        idName   = idName   || 'id';
-        pidName  = pidName  || 'pid';
-        nodeName = nodeName || 'node';
-        urlname  = urlname  || 'url';
+    function renderHTML(data, idName, pidName, nodeName, urlname, childrenName) {
+        //初始化相关字段名称
+        idName        = idName   || 'id';
+        pidName       = pidName  || 'pid';
+        nodeName      = nodeName || 'node';
+        urlname       = urlname  || 'url';
+        childrenName  = childrenName  || 'children';
 
-        var recursion = new treeHelper.recursion(data, idName, pidName, topID);
         var html = '';
-
-        recursion.currentBefore = function (v, k, counter) {
+        //递归所需函数
+        var _loop = function(data) {
+            var html = '';
+                for(var i in data) {
+                    var v = data[i];
+                    html += '<dd>';
+                    html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+v[idName]+'"' : '')+'>';
+                    html += v[nodeName];
+                    html += '</a>';
+                    if (v[childrenName].length > 0) {
+                        html += '<dl class="layui-nav-child">';
+                        html += _loop(v[childrenName]);
+                        html += '</dl>';
+                    }
+                    html += '</dd>';
+                }
+                return html;
+        }
+        
+        //循环外层的li
+        for(var i in data) {
+            var v = data[i];
             html += '<li class="layui-nav-item">';
-        };
-
-        recursion.current = function(v, k, counter) {
             html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+v[idName]+'"' : '')+'>';
             html += v[nodeName];
             html += '</a>';
-        };
-
-        recursion.loopBefore = function (v, k) {
-            html += '<ul class="layui-nav-child">';
-        };
-
-        recursion.loopAfter = function (v, k) {
-            html += '</ul>';
-        };
-
-        recursion.currentAfter = function (v, k, counter) {
+            if(v[childrenName].length > 0) {
+                html += '<dl class="layui-nav-child">';
+                html += _loop(v[childrenName]);
+                html += '</dl>';
+            }
             html += '</li>';
-        };
-
-        recursion.loop();
-
+        }
+        
+        //返回结果
         return html;
     }
 
     /**
      * 初始化
      */
-    function init(data, topID, idName, pidName, nodeName, urlName) {
-        var html = renderHTML(data, topID, idName, pidName, nodeName, urlName);
+    function init(data, idName, pidName, nodeName, urlName) {
+        var html = renderHTML(tree(data, idName, pidName), idName, pidName, nodeName, urlName);
         _menu.html(html);
         element.init('nav('+_filter+')');
     }

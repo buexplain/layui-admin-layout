@@ -1,3 +1,6 @@
+/**
+ * 消除外框等
+ */
 .layui-layout-admin .layui-body {
 	bottom:0;
 }
@@ -7,9 +10,52 @@
 .layui-layout-admin .layui-tab-content {
 	padding:0;
 }
+
+/**
+ * 拓宽左侧导航栏
+ */
+.layui-layout-admin .layui-side, .layui-layout-admin .layui-nav-tree{
+	width: 280px;
+}
+.layui-layout-admin .layui-side-scroll {
+	width: 300px;
+}
+.layui-layout-admin .layui-body {
+	left: 300px;
+}
+.layui-layout-admin .layui-logo {
+	width: 265px;
+	left: 15px;
+	text-align: left;
+	overflow: hidden;
+}
+
+/**
+ * 重写后台标题样式
+ */
+.layui-layout-admin .layui-logo, .layui-layout-admin .layui-logo a {
+    font-size: 22px;
+    color: #9d9d9d;
+}
+
+/**
+ * 左侧导航栏缩进
+ */
+ .layui-nav .layui-nav-item a {
+    padding: 0 15px ;
+}
+.layui-side .layui-nav .layui-nav-child  a {padding-left: 30px;}.layui-side .layui-nav .layui-nav-child .layui-nav-child  a {padding-left: 45px;}.layui-side .layui-nav .layui-nav-child .layui-nav-child .layui-nav-child  a {padding-left: 60px;}.layui-side .layui-nav .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child  a {padding-left: 75px;}.layui-side .layui-nav .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child  a {padding-left: 90px;}.layui-side .layui-nav .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child  a {padding-left: 105px;}.layui-side .layui-nav .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child  a {padding-left: 120px;}.layui-side .layui-nav .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child  a {padding-left: 135px;}.layui-side .layui-nav .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child .layui-nav-child  a {padding-left: 150px;}
+
+/**
+ * 第一个切换卡去掉删除按钮
+ */
 .layui-layout-admin .layui-tab-title li:first-child .layui-tab-close {
 	display:none;
 }
+
+/**
+ * tab切换卡右侧刷新与返回的样式
+ */
 .layui-tab .page-control{display: flex;position: absolute;z-index:11;right: 0; border-bottom: 1px solid #e6e6e6; background: #fff;}
 .layui-tab .page-control .btn{width:56px;height: 40px; line-height: 40px; padding: 0 20px;box-sizing: border-box; cursor:pointer;}
 .layui-tab .page-control .btn:hover{border-bottom: 2px solid #5FB878; color: #5FB878;}

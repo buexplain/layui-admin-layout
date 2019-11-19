@@ -72,7 +72,7 @@
         layui.use('skeleton', function() {
             skeleton = layui.skeleton('left-nav', 'top-tab');
             //初始化菜单栏
-            skeleton.menu.init(node, 0, 'id', 'pid', 'name', 'url');
+            skeleton.menu.init(node,'id', 'pid', 'name', 'url');
             //打开第一个节点
             skeleton.menu.open(node[0].id);
         });
