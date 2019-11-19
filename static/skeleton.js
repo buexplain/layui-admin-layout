@@ -3,12 +3,12 @@
  */
 layui.define(['layer', 'element', 'skeletonMenu', 'skeletonTab'], function(exports) {
     var _tab  = null;
-    var _menu  = null;
+    var _menu = null;
     var $     = layui.jquery;
     var layer = layui.layer;
 
     function height() {
-        return $(window).height() - 60 - 41 - 3;
+        return $(window).height() - 60 - 41 - 5;
     }
 
     /**

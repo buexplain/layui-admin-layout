@@ -91,7 +91,7 @@ layui.define(['layer','element'], function(exports) {
     function init(data, idName, pidName, nodeName, urlName) {
         var html = renderHTML(tree(data, idName, pidName), idName, pidName, nodeName, urlName);
         _menu.html(html);
-        element.init('nav('+_filter+')');
+        element.init('nav', _filter);
     }
 
     /**
@@ -142,8 +142,8 @@ layui.define(['layer','element'], function(exports) {
      * 导出接口
      */
     exports('skeletonMenu', function(filter) {
-        _filter  = filter;
-        _menu        = $('.layui-nav[lay-filter='+_filter+']').eq(0);
+        _filter = filter;
+        _menu   = $('.layui-nav[lay-filter='+_filter+']').eq(0);
         if(_menu.length === 0) {
             layer.msg('没有找到导航栏，模块初始化失败');
             return false;
