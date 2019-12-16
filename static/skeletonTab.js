@@ -80,6 +80,13 @@ layui.define(['layer','element'], function(exports) {
         window.__2019125_history.destroy('iframe-id-'+id);
         var iframe = '<iframe onload="layui.layer.close('+loadIndex+');window.__2019125_history.record(this.id);" src="'+url+'" id="iframe-id-'+id+'" name="iframe-name-'+id+'" frameborder="0" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
         element.tabAdd(_filter, {title: title, content: iframe, id: id});
+        setTimeout(function () {
+            resetHeight(height());
+        }, 100);
+    }
+
+    function height() {
+        return $(window).height() - 60 - 41 - 5;
     }
 
     /**
