@@ -2,14 +2,14 @@
  * 顶部选项卡
  */
 layui.define(['layer','element'], function(exports) {
-    var layer      = layui.layer;
-    var element    = layui.element;
-    var $          = layui.jquery;
+    let layer      = layui.layer;
+    let element = layui.element;
+    let $ = layui.jquery;
 
-    var _filter  = null;
-    var _tab     = null;
-    var _title   = null;
-    var _content = null;
+    let _filter = null;
+    let _tab = null;
+    let _title = null;
+    let _content = null;
 
     /**
      * 记录每个tab iframe 的 src
@@ -19,17 +19,17 @@ layui.define(['layer','element'], function(exports) {
             window.localStorage.removeItem(id);
         },
         record: function (id) {
-            var tmp = document.querySelectorAll("iframe");
-            var history = window.localStorage.getItem(id);
+            let tmp = document.querySelectorAll("iframe");
+            let history = window.localStorage.getItem(id);
             if(history == null) {
                 history = [];
             }else {
                 history = JSON.parse(history);
             }
             try {
-                for(var i in tmp) {
+                for(const i in tmp) {
                     if(tmp[i].id === id) {
-                        var url = window.frames[i].location.href;
+                        const url = window.frames[i].location.href;
                         if(history[history.length -1] !== url) {
                             history.push(window.frames[i].location.href);
                             window.localStorage.setItem(id, JSON.stringify(history));
@@ -41,7 +41,7 @@ layui.define(['layer','element'], function(exports) {
             }
         },
         back: function (id) {
-            var history = window.localStorage.getItem(id);
+            let history = window.localStorage.getItem(id);
             if(history == null) {
                 history = [];
             }else {
@@ -54,7 +54,7 @@ layui.define(['layer','element'], function(exports) {
                 return history[0];
             }
             history.pop();
-            var url = history.pop();
+            let url = history.pop();
             window.localStorage.setItem(id, JSON.stringify(history));
             return url;
         }
@@ -72,13 +72,13 @@ layui.define(['layer','element'], function(exports) {
      */
     function add(title, url, id) {
         //显示加载层
-        var loadIndex = layer.load();
+        let loadIndex = layer.load();
         //设置2秒后再次关闭loading
         setTimeout(function() {
             layer.close(loadIndex);
         }, 2000);
         window.__2019125_history.destroy('iframe-id-'+id);
-        var iframe = '<iframe onload="layui.layer.close('+loadIndex+');window.__2019125_history.record(this.id);" src="'+url+'" id="iframe-id-'+id+'" name="iframe-name-'+id+'" frameborder="0" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
+        let iframe = '<iframe onload="layui.layer.close(' + loadIndex + ');window.__2019125_history.record(this.id);" src="' + url + '" id="iframe-id-' + id + '" name="iframe-name-' + id + '" style="height:100%;width:100%;margin:0;padding:0;border:0;"></iframe>';
         element.tabAdd(_filter, {title: title, content: iframe, id: id});
         setTimeout(function () {
             resetHeight(height());
@@ -93,7 +93,7 @@ layui.define(['layer','element'], function(exports) {
      * 返回当前选项卡
      */
     function curr() {
-        var tmp = _content.find('.layui-show');
+        let tmp = _content.find('.layui-show');
         if(tmp.length === 0) {
             return null;
         }
@@ -104,11 +104,9 @@ layui.define(['layer','element'], function(exports) {
      * 判断一个选项卡是否存在
      */
     function has(id) {
-        var li = _title.find('li[lay-id='+id+']');
-        if(li.length === 0) {
-            return false;
-        }
-        return true;
+        let li = _title.find('li[lay-id=' + id + ']');
+        return li.length !== 0;
+
     }
 
     /**

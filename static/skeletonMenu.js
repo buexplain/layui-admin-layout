@@ -2,12 +2,12 @@
  * 左侧菜单栏
  */
 layui.define(['layer','element'], function(exports) {
-    var layer   = layui.layer;
-    var element = layui.element;
-    var $       = layui.jquery;
+    const layer = layui.layer;
+    let element = layui.element;
+    let $ = layui.jquery;
 
-    var _filter  = null;
-    var _menu     = null;
+    let _filter = null;
+    let _menu = null;
 
     /**
      * 将一个父子级的数组转换成一棵树形数组
@@ -17,13 +17,13 @@ layui.define(['layer','element'], function(exports) {
         parentIDName = parentIDName || 'pid';
         childrenName = childrenName || 'children';
 
-        var map = new Map();
+        let map = new Map();
         arr.forEach(function (value) {
             value[childrenName] = [];
             map.set(value[idName], value);
         });
 
-        var result = [];
+        let result = [];
 
         arr.forEach(function (value) {
             if(map.has(value[parentIDName])) {
@@ -33,44 +33,43 @@ layui.define(['layer','element'], function(exports) {
             }
         });
         return result;
-    };
+    }
 
     /**
      * 将树形结构的数据渲染成html
      */
-    function renderHTML(data, idName, pidName, nodeName, urlname, childrenName) {
+    function renderHTML(data, idName, nodeName, urlName, childrenName) {
         //初始化相关字段名称
         idName        = idName   || 'id';
-        pidName       = pidName  || 'pid';
         nodeName      = nodeName || 'node';
-        urlname       = urlname  || 'url';
+        urlName       = urlName  || 'url';
         childrenName  = childrenName  || 'children';
 
-        var html = '';
+        let html = '';
         //递归所需函数
-        var _loop = function(data) {
-            var html = '';
-                for(var i in data) {
-                    var v = data[i];
-                    html += '<dd>';
-                    html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+v[idName]+'"' : '')+'>';
-                    html += v[nodeName];
-                    html += '</a>';
-                    if (v[childrenName].length > 0) {
-                        html += '<dl class="layui-nav-child">';
-                        html += _loop(v[childrenName]);
-                        html += '</dl>';
-                    }
-                    html += '</dd>';
+        let _loop = function (data) {
+            let html = '';
+            for (let i in data) {
+                let v = data[i];
+                html += '<dd>';
+                html += '<a href="javascript:;"' + (v[urlName] ? ' data-url="' + v[urlName] + '" data-id="' + v[idName] + '"' : '') + '>';
+                html += v[nodeName];
+                html += '</a>';
+                if (v[childrenName].length > 0) {
+                    html += '<dl class="layui-nav-child">';
+                    html += _loop(v[childrenName]);
+                    html += '</dl>';
                 }
-                return html;
-        }
-        
+                html += '</dd>';
+            }
+            return html;
+        };
+
         //循环外层的li
-        for(var i in data) {
-            var v = data[i];
+        for(let i in data) {
+            let v = data[i];
             html += '<li class="layui-nav-item">';
-            html += '<a href="javascript:;"'+(v[urlname] ? ' data-url="'+v[urlname]+'" data-id="'+v[idName]+'"' : '')+'>';
+            html += '<a href="javascript:;"'+(v[urlName] ? ' data-url="'+v[urlName]+'" data-id="'+v[idName]+'"' : '')+'>';
             html += v[nodeName];
             html += '</a>';
             if(v[childrenName].length > 0) {
@@ -80,7 +79,7 @@ layui.define(['layer','element'], function(exports) {
             }
             html += '</li>';
         }
-        
+
         //返回结果
         return html;
     }
@@ -89,7 +88,7 @@ layui.define(['layer','element'], function(exports) {
      * 初始化
      */
     function init(data, idName, pidName, nodeName, urlName) {
-        var html = renderHTML(tree(data, idName, pidName), idName, pidName, nodeName, urlName);
+        let html = renderHTML(tree(data, idName, pidName), idName, nodeName, urlName);
         _menu.html(html);
         element.init('nav', _filter);
     }
@@ -98,9 +97,9 @@ layui.define(['layer','element'], function(exports) {
      * 判断是否打开
      */
     function isOpen(id) {
-        var a = _menu.find('a[data-id='+id+']');
+        let a = _menu.find('a[data-id=' + id + ']');
         if(a.length > 0) {
-            var p = a.parent();
+            let p = a.parent();
             if(p.hasClass('layui-nav-itemed') || p.hasClass('layui-this')) {
                 return true;
             }
@@ -113,7 +112,7 @@ layui.define(['layer','element'], function(exports) {
      */
     function open(id) {
         if(isOpen(id) === false) {
-            var a = _menu.find('a[data-id='+id+']');
+            let a = _menu.find('a[data-id=' + id + ']');
             if(a.length > 0) {
                 a.eq(0).click();
             }
@@ -125,7 +124,7 @@ layui.define(['layer','element'], function(exports) {
      */
     function close(id) {
         if(isOpen(id) === true) {
-            var a = _menu.find('a[data-id='+id+']');
+            const a = _menu.find('a[data-id=' + id + ']');
             if(a.length > 0) {
                 a.eq(0).click();
             }
