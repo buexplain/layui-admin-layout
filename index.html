@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -19,13 +19,13 @@
             <!-- 头部区域（可配合layui已有的水平导航） -->
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    <a href="javascript:void(0);">
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img" alt="">
                         梦想星辰大海
                     </a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" onclick="forget()">
+                            <a href="javascript:void(0);" onclick="forget()">
                                 修改密码
                             </a>
                         </dd>
@@ -49,8 +49,8 @@
         <div class="layui-body">
             <div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="top-tab">
                 <div class="page-control">
-                    <a class="btn layui-icon layui-icon-refresh" title="刷新" href="javascript:;" onclick="skeleton.refresh();"></a>
-                    <a class="btn layui-icon layui-icon-return" title="后退" href="javascript:;" onclick="skeleton.back();"></a>
+                    <a class="btn layui-icon layui-icon-refresh" title="刷新" href="javascript:void(0);" onclick="skeleton.refresh();"></a>
+                    <a class="btn layui-icon layui-icon-return" title="后退" href="javascript:void(0);" onclick="skeleton.back();"></a>
                 </div>
                 <ul class="layui-tab-title"></ul>
                 <div class="layui-tab-content"></div>
@@ -65,10 +65,55 @@
         });
 
         //模拟的节点
-        var node = [{"name":"测试1","id":1,"pid":0,"url":"test1.html"},{"name":"layui文档","id":2,"pid":0,"url":"javascript:void(0);"},{"name":"页面元素","id":3,"pid":2,"url":"javascript:void(0);"},{"name":"布局","id":4,"pid":3,"url":"javascript:void(0);"},{"name":"栅格系统","id":5,"pid":4,"url":"https://www.layui.com/doc/element/layout.html#grid"},{"name":"后台布局","id":6,"pid":4,"url":"https://www.layui.com/doc/element/layout.html#admin"},{"name":"layui 颜色","id":7,"pid":3,"url":"https://www.layui.com/doc/element/color.html"},{"name":"颜色参考","id":8,"pid":7,"url":"https://www.layui.com/doc/element/color.html#color-design"},{"name":"内置的背景色类","id":9,"pid":7,"url":"https://www.layui.com/doc/element/color.html#bgcolor"},{"name":"内置模块","id":10,"pid":2,"url":"javascript:void(0);"},{"name":"弹层组件文档 - layui.layer","id":11,"pid":10,"url":"https://www.layui.com/doc/modules/layer.html"},{"name":" 日期和时间组件文档 - layui.laydate","id":12,"pid":10,"url":"https://www.layui.com/doc/modules/laydate.html"},{"name":"测试2","id":13,"pid":0,"url":"test2.html"}];
+        const node = [{"name": "测试1", "id": 1, "pid": 0, "url": "test1.html"}, {
+            "name": "layui文档",
+            "id": 2,
+            "pid": 0,
+            "url": "javascript:void(0);"
+        }, {"name": "页面元素", "id": 3, "pid": 2, "url": "javascript:void(0);"}, {
+            "name": "布局",
+            "id": 4,
+            "pid": 3,
+            "url": "javascript:void(0);"
+        }, {
+            "name": "栅格系统",
+            "id": 5,
+            "pid": 4,
+            "url": "https://www.layui.com/doc/element/layout.html#grid"
+        }, {
+            "name": "后台布局",
+            "id": 6,
+            "pid": 4,
+            "url": "https://www.layui.com/doc/element/layout.html#admin"
+        }, {
+            "name": "layui 颜色",
+            "id": 7,
+            "pid": 3,
+            "url": "https://www.layui.com/doc/element/color.html"
+        }, {
+            "name": "颜色参考",
+            "id": 8,
+            "pid": 7,
+            "url": "https://www.layui.com/doc/element/color.html#color-design"
+        }, {
+            "name": "内置的背景色类",
+            "id": 9,
+            "pid": 7,
+            "url": "https://www.layui.com/doc/element/color.html#bgcolor"
+        }, {"name": "内置模块", "id": 10, "pid": 2, "url": "javascript:void(0);"}, {
+            "name": "弹层组件文档 - layui.layer",
+            "id": 11,
+            "pid": 10,
+            "url": "https://www.layui.com/doc/modules/layer.html"
+        }, {
+            "name": " 日期和时间组件文档 - layui.laydate",
+            "id": 12,
+            "pid": 10,
+            "url": "https://www.layui.com/doc/modules/laydate.html"
+        }, {"name": "测试2", "id": 13, "pid": 0, "url": "test2.html"}];
 
         //初始化页面骨架
-        var skeleton = null;
+        let skeleton = null;
         layui.use('skeleton', function() {
             skeleton = layui.skeleton('left-nav', 'top-tab');
             //初始化菜单栏
@@ -81,8 +126,8 @@
          * 忘记密码
          */
         function forget() {
-            var id  = '2018-10-12';
-            if(skeleton.tab.has(id) == false) {
+            const id = '2018-10-12';
+            if(skeleton.tab.has(id) === false) {
                 skeleton.tab.add("修改密码", "https://fly.layui.com/user/forget", id);
             }
             skeleton.tab.change(id);
