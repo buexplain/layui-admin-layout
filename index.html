@@ -6,132 +6,98 @@
     <title>
         layout 后台大布局 - 梦想星辰大海
     </title>
-    <link rel="stylesheet" href="layui/css/layui.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.8.12/css/layui.min.css" rel="stylesheet">
     <link rel="stylesheet" href="static/skeleton.css">
 </head>
 <body class="layui-layout-body">
-    <div class="layui-layout layui-layout-admin">
-        <!-- 头部 -->
-        <div class="layui-header">
-            <div class="layui-logo">
-                后台布局
-            </div>
-            <!-- 头部区域（可配合layui已有的水平导航） -->
-            <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a href="javascript:void(0);">
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img" alt="">
-                        梦想星辰大海
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <a href="javascript:void(0);" onclick="forget()">
-                                修改密码
-                            </a>
-                        </dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="">
-                        退了
-                    </a>
-                </li>
-            </ul>
+<div class="layui-layout layui-layout-admin">
+    <!-- 头部 -->
+    <div class="layui-header">
+        <div class="layui-logo">
+            后台布局
         </div>
-        <!-- 菜单栏 -->
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="left-nav"></ul>
-            </div>
-        </div>
-        <!-- 主体 -->
-        <div class="layui-body">
-            <div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="top-tab">
-                <div class="page-control">
-                    <a class="btn layui-icon layui-icon-refresh" title="刷新" href="javascript:void(0);" onclick="skeleton.refresh();"></a>
-                    <a class="btn layui-icon layui-icon-return" title="后退" href="javascript:void(0);" onclick="skeleton.back();"></a>
-                </div>
-                <ul class="layui-tab-title"></ul>
-                <div class="layui-tab-content"></div>
-            </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img" alt="">
+                    梦想星辰大海
+                </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href="javascript:void(0);" onclick="forget()">
+                            修改密码
+                        </a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="">
+                    退了
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 菜单栏 -->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="left-nav"></ul>
         </div>
     </div>
-    <script src="layui/layui.js"></script>
-    <script>
-        //对layui进行全局配置
-        layui.config({
-            base: 'static/'
-        });
+    <!-- 主体 -->
+    <div class="layui-body">
+        <div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="top-tab">
+            <div class="page-control">
+                <a class="btn layui-icon layui-icon-refresh" title="刷新" href="javascript:void(0);"
+                   onclick="skeleton.refresh();"></a>
+                <a class="btn layui-icon layui-icon-return" title="后退" href="javascript:void(0);"
+                   onclick="skeleton.back();"></a>
+            </div>
+            <ul class="layui-tab-title"></ul>
+            <div class="layui-tab-content"></div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.8.12/layui.min.js"></script>
+<script>
+    //对layui进行全局配置
+    layui.config({
+        base: 'static/'
+    });
 
-        //模拟的节点
-        const node = [{"name": "测试1", "id": 1, "pid": 0, "url": "test1.html"}, {
-            "name": "layui文档",
-            "id": 2,
-            "pid": 0,
-            "url": "javascript:void(0);"
-        }, {"name": "页面元素", "id": 3, "pid": 2, "url": "javascript:void(0);"}, {
-            "name": "布局",
-            "id": 4,
-            "pid": 3,
-            "url": "javascript:void(0);"
-        }, {
-            "name": "栅格系统",
-            "id": 5,
-            "pid": 4,
-            "url": "https://www.layui.com/doc/element/layout.html#grid"
-        }, {
-            "name": "后台布局",
-            "id": 6,
-            "pid": 4,
-            "url": "https://www.layui.com/doc/element/layout.html#admin"
-        }, {
-            "name": "layui 颜色",
-            "id": 7,
-            "pid": 3,
-            "url": "https://www.layui.com/doc/element/color.html"
-        }, {
-            "name": "颜色参考",
-            "id": 8,
-            "pid": 7,
-            "url": "https://www.layui.com/doc/element/color.html#color-design"
-        }, {
-            "name": "内置的背景色类",
-            "id": 9,
-            "pid": 7,
-            "url": "https://www.layui.com/doc/element/color.html#bgcolor"
-        }, {"name": "内置模块", "id": 10, "pid": 2, "url": "javascript:void(0);"}, {
-            "name": "弹层组件文档 - layui.layer",
-            "id": 11,
-            "pid": 10,
-            "url": "https://www.layui.com/doc/modules/layer.html"
-        }, {
-            "name": " 日期和时间组件文档 - layui.laydate",
-            "id": 12,
-            "pid": 10,
-            "url": "https://www.layui.com/doc/modules/laydate.html"
-        }, {"name": "测试2", "id": 13, "pid": 0, "url": "test2.html"}];
+    //模拟的节点
+    const node = [
+        {"name": "测试1", "id": 1, "pid": 0, "url": "/tests/test1.html"},
+        {"name": "测试2", "id": 2, "pid": 0, "url": "/tests/test2.html"},
+        {"name": "layui文档", "id": 3, "pid": 0, "url": "javascript:void(0);"},
+        {"name": "基础", "id": 4, "pid": 3, "url": "javascript:void(0);"},
+        {"name": "开始使用", "id": 5, "pid": 4, "url": "https://layui.dev/docs/2.8/"},
+        {"name": "布局", "id": 6, "pid": 3, "url": "javascript:void(0);"},
+        {"name": "框体布局", "id": 7, "pid": 6, "url": "https://layui.dev/docs/2.8/layout/"},
+        {"name": "栅格布局", "id": 8, "pid": 6, "url": "https://layui.dev/docs/2.8/layout/grid.html"}
+    ];
 
-        //初始化页面骨架
-        let skeleton = null;
-        layui.use('skeleton', function() {
-            skeleton = layui.skeleton('left-nav', 'top-tab');
-            //初始化菜单栏
-            skeleton.menu.init(node,'id', 'pid', 'name', 'url');
-            //打开第一个节点
-            skeleton.menu.open(node[0].id);
-        });
+    //初始化页面骨架
+    let skeleton = null;
+    layui.use('skeleton', function () {
+        skeleton = layui.skeleton('left-nav', 'top-tab');
+        //初始化菜单栏
+        skeleton.menu.init(node, 'id', 'pid', 'name', 'url');
+        //打开第一个节点
+        skeleton.menu.open(node[0].id);
+    });
 
-        /**
-         * 忘记密码
-         */
-        function forget() {
-            const id = '2018-10-12';
-            if(skeleton.tab.has(id) === false) {
-                skeleton.tab.add("修改密码", "https://fly.layui.com/user/forget", id);
-            }
-            skeleton.tab.change(id);
+    /**
+     * 忘记密码
+     */
+    function forget() {
+        const id = '2018-10-12';
+        if (skeleton.tab.has(id) === false) {
+            skeleton.tab.add("修改密码", "https://cdnjs.com/libraries/layui", id);
         }
-    </script>
+        skeleton.tab.change(id);
+    }
+</script>
 </body>
 </html>
